@@ -11,56 +11,50 @@ import (
 )
 
 func Main() {
-	//TODO: This solution is incorrect it works only if you do not tolerateSingleError - need to solve it
-
 	data := readDataFromFile("./day02/input02.txt")
-	numberOfSafeReports := computeNumberOfSafeReports(data, true)
+	numberOfSafeReports := computeNumberOfSafeReports(data, false)
 
-	fmt.Println("Number of safe reports is ", numberOfSafeReports)
+	fmt.Println("Number of safe reports is  ", numberOfSafeReports)
+
+	numberOfSafeReportsWithToleration := computeNumberOfSafeReports(data, true)
+
+	fmt.Println("Number of safe reports is with toleration of one error is ", numberOfSafeReportsWithToleration)
+}
+
+func checkReport(report []int) bool {
+	direction := report[0] - report[1]
+
+	for i := 1; i < len(report); i++ {
+		diff := report[i-1] - report[i]
+
+		if diff == 0 || math.Abs(float64(diff)) > 3 {
+			return false
+		}
+
+		if (diff > 0 && direction < 0) || (diff < 0 && direction > 0) {
+			return false
+		}
+	}
+	return true
 }
 
 func computeNumberOfSafeReports(data [][]int, tolerateSingleError bool) int {
 	score := 0
-	maxHearts := 1
-	if tolerateSingleError {
-		maxHearts = 2
-	}
-
 	for _, report := range data {
-		prevNum := report[0]
-		direction := 0
-		hearts := maxHearts
-
-		for i := 1; i < len(report); i++ {
-			number := report[i]
-			diff := prevNum - number
-
-			if diff == 0 || math.Abs(float64(diff)) > 3 {
-				hearts--
-				if hearts == 0 {
-					break
-				} else {
-					continue
-				}
-			}
-
-			if (diff > 0 && direction < 0) || (diff < 0 && direction > 0) {
-				hearts--
-				if hearts == 0 {
-					break
-				} else {
-					continue
-				}
-			}
-
-			prevNum = number
-			direction = diff
-		}
-		if hearts > 0 {
+		if checkReport(report) {
 			score++
+		} else if tolerateSingleError {
+			for i := 0; i < len(report); i++ {
+				modifiedArray := make([]int, 0, len(report)-1)
+				modifiedArray = append(modifiedArray, report[:i]...)
+				modifiedArray = append(modifiedArray, report[i+1:]...)
+				if checkReport(modifiedArray) {
+					score++
+					break
+				}
+			}
 		}
 	}
-
 	return score
 }
 
