@@ -10,7 +10,51 @@ import (
 func Main() {
 	data := readDataFromFile("./day04/input02.txt")
 	fmt.Println("Result for the first solution is: ", firstSolution(data))
-	//fmt.Println("Result for the second solution is: ", secondSolution(input01))
+	fmt.Println("Result for the second solution is: ", secondSolution(data))
+}
+
+func secondSolution(data [][]string) int {
+	height := len(data)
+	width := len(data[0])
+	total := 0
+
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
+			if data[y][x] == "A" {
+				total += findMASInX(data, x, y)
+			}
+		}
+	}
+
+	return total
+
+}
+
+func findMASInX(data [][]string, x, y int) int {
+	if x-1 < 0 ||
+		y-1 < 0 ||
+		x+1 >= len(data[0]) ||
+		y+1 >= len(data) {
+		return 0
+	}
+
+	if data[y+1][x+1] == "S" && data[y-1][x-1] == "M" &&
+		data[y-1][x+1] == "S" && data[y+1][x-1] == "M" {
+		return 1
+	}
+	if data[y+1][x+1] == "M" && data[y-1][x-1] == "S" &&
+		data[y-1][x+1] == "M" && data[y+1][x-1] == "S" {
+		return 1
+	}
+	if data[y+1][x+1] == "M" && data[y-1][x-1] == "S" &&
+		data[y-1][x+1] == "S" && data[y+1][x-1] == "M" {
+		return 1
+	}
+	if data[y+1][x+1] == "S" && data[y-1][x-1] == "M" &&
+		data[y-1][x+1] == "M" && data[y+1][x-1] == "S" {
+		return 1
+	}
+	return 0
 }
 
 func firstSolution(data [][]string) int {
