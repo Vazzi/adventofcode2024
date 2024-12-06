@@ -22,18 +22,3 @@ func readRules(fileName string) map[string][]string {
 	}
 	return data
 }
-
-func readData(fileName string) [][]string {
-	file, _ := os.Open(fileName)
-	defer file.Close()
-
-	var data [][]string
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := strings.Split(scanner.Text(), ",")
-		data = append(data, line)
-	}
-	return data
-
-}
