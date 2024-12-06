@@ -6,7 +6,10 @@ import (
 )
 
 func ReadChars(fileName string) [][]string {
-	file, _ := os.Open(fileName)
+	file, err := os.Open(fileName)
+	if err != nil {
+		panic(err)
+	}
 
 	data := make([][]string, 0)
 	scanner := bufio.NewScanner(file)
