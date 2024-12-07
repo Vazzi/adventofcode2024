@@ -42,7 +42,7 @@ func markVisitsOnMap(mapData [][]string, guard GuardState) [][]string {
 
 // Simulate guard and check if there is a cycle
 func checkCycle(mapData [][]string, initGuard GuardState) bool {
-	guardStates := make([]GuardState, 0)
+	guardStates := make([]int, len(mapData)*len(mapData[0]))
 	width, height := len(mapData[0]), len(mapData)
 	guard := GuardState{initGuard.x, initGuard.y, initGuard.dir}
 
@@ -58,17 +58,12 @@ func checkCycle(mapData [][]string, initGuard GuardState) bool {
 		}
 
 		// Check if guard is in cycle
-		// This is really slow, but it works :(
-		for _, state := range guardStates {
-			if state.x == nextX &&
-				state.y == nextY &&
-				state.dir == guard.dir {
-				return true
-			}
+		if guardStates[nextX+nextY*width] == guard.dir+1 {
+			return true
 		}
 
 		guard.x = nextX
 		guard.y = nextY
-		guardStates = append(guardStates, GuardState{nextX, nextY, guard.dir})
+		guardStates[guard.x+guard.y*width] = guard.dir + 1
 	}
 }
