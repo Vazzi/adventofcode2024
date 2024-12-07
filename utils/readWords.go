@@ -1,23 +1,15 @@
 package utils
 
 import (
-	"bufio"
-	"os"
 	"strings"
 )
 
 func ReadWords(fileName string, delimiter string) [][]string {
-	file, err := os.Open(fileName)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
+	lines := ReadLines(fileName)
 	var data [][]string
 
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := strings.Split(scanner.Text(), delimiter)
+	for _, line := range lines {
+		line := strings.Split(line, delimiter)
 		data = append(data, line)
 	}
 	return data
