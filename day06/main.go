@@ -6,10 +6,12 @@ import (
 )
 
 func Main() {
-	mapData := utils.ReadChars("./day06/input.txt")
+	utils.PrintDayHeadline("Day 6: Guard Gallivant")
+
+	mapData := utils.ReadChars(utils.InputDataPath(6, false))
 	fmt.Println("Result for the first solution is: ", firstSolution(mapData))
 
-	mapData = utils.ReadChars("./day06/input.txt")
+	mapData = utils.ReadChars(utils.InputDataPath(6, false))
 	fmt.Println("Result for the second solution is: ", secondSolution(mapData))
 }
 

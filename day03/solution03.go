@@ -1,12 +1,14 @@
 package day03
 
 import (
+	"adventofcode2024/utils"
 	"fmt"
 	"regexp"
 	"strconv"
 )
 
 func Main() {
+	utils.PrintDayHeadline("Day 3: Mull It Over")
 	fmt.Println("Result for the first solution is: ", firstSolution(input01))
 	fmt.Println("Result for the second solution is: ", secondSolution(input01))
 }

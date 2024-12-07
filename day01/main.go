@@ -1,12 +1,15 @@
 package day01
 
 import (
+	"adventofcode2024/utils"
 	"fmt"
 	"math"
 	"sort"
 )
 
 func Main() {
+	utils.PrintDayHeadline("Day 1: Historian Hysteria")
+
 	distance := computeDistance(firstList, secondList)
 	fmt.Println("Distance between the two lists is: ", distance)
 

@@ -6,8 +6,10 @@ import (
 )
 
 func Main() {
-	rules := readRules("./day05/rules02.txt")
-	data := utils.ReadWords("./day05/data02.txt", ",")
+	utils.PrintDayHeadline("Day 5: Print Queue")
+
+	rules := readRules("./inputData/day05-rules.txt")
+	data := utils.ReadWords("./inputData/day05-data.txt", ",")
 
 	fmt.Println("Result for the first solution is: ", firstSolution(rules, data))
 	fmt.Println("Result for the second solution is: ", secondSolution(rules, data))
