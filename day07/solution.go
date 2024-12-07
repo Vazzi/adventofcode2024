@@ -1,18 +1,23 @@
 package day07
 
-func firstSolution(data []string) int {
-	solution := 0
+import (
+	"fmt"
+	"strconv"
+)
+
+func solution(data []string, useConcat bool) int {
+	finalResult := 0
 	for _, line := range data {
 		result, numbers := parseLine(line)
-		if hasSolution(result, numbers) {
-			solution += result
+		if hasSolution(result, numbers, useConcat) {
+			finalResult += result
 		}
 	}
-	return solution
+	return finalResult
 }
 
-func hasSolution(result int, numbers []int) bool {
-	variations := generateVariations(len(numbers) - 1)
+func hasSolution(result int, numbers []int, useConcat bool) bool {
+	variations := generateVariations(len(numbers)-1, useConcat)
 
 	for _, variation := range variations {
 		localResult := numbers[0]
@@ -22,6 +27,8 @@ func hasSolution(result int, numbers []int) bool {
 				localResult = localResult * numbers[i+1]
 			case Add:
 				localResult = localResult + numbers[i+1]
+			case Concat:
+				localResult, _ = concatenate(localResult, numbers[i+1])
 			}
 		}
 		if localResult == result {
@@ -31,13 +38,21 @@ func hasSolution(result int, numbers []int) bool {
 	return false
 }
 
+func concatenate(a, b int) (int, error) {
+	return strconv.Atoi(fmt.Sprintf("%d%d", a, b))
+}
+
 const (
-	Mul int = 0
-	Add     = 1
+	Mul    int = 0
+	Add        = 1
+	Concat     = 2
 )
 
-func generateVariations(length int) [][]int {
+func generateVariations(length int, useConcat bool) [][]int {
 	operators := []int{Mul, Add}
+	if useConcat {
+		operators = append(operators, Concat)
+	}
 
 	var results [][]int
 	var compute func([]int)
