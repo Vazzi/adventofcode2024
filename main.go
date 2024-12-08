@@ -8,11 +8,12 @@ import (
 	"adventofcode2024/day05"
 	"adventofcode2024/day06"
 	"adventofcode2024/day07"
+	"adventofcode2024/day08"
 	"fmt"
 )
 
 func main() {
-	currentDay := 6
+	currentDay := 8
 	printHeader(currentDay)
 	switch currentDay {
 	case 1:
@@ -29,6 +30,8 @@ func main() {
 		day06.Main()
 	case 7:
 		day07.Main()
+	case 8:
+		day08.Main()
 	}
 }
 
