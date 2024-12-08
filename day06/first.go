@@ -13,7 +13,7 @@ func firstSolution(mapData [][]string) int {
 		}
 
 		if mapData[nextY][nextX] == "#" {
-			guard.dir = guard.turnRight()
+			guard.turnRight()
 			continue
 		}
 

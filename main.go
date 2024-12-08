@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	currentDay := 7
+	currentDay := 6
 	printHeader(currentDay)
 	switch currentDay {
 	case 1:

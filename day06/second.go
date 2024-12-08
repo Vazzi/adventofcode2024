@@ -20,7 +20,7 @@ func secondSolution(mapData [][]string) int {
 }
 
 // Mark where guard was with X
-func markVisitsOnMap(mapData [][]string, guard GuardState) [][]string {
+func markVisitsOnMap(mapData [][]string, guard guardState) [][]string {
 	width, height := len(mapData[0]), len(mapData)
 
 	for {
@@ -31,7 +31,7 @@ func markVisitsOnMap(mapData [][]string, guard GuardState) [][]string {
 		}
 
 		if mapData[nextY][nextX] == "#" {
-			guard.dir = guard.turnRight()
+			guard.turnRight()
 			continue
 		}
 		guard.x, guard.y = nextX, nextY
@@ -41,10 +41,10 @@ func markVisitsOnMap(mapData [][]string, guard GuardState) [][]string {
 }
 
 // Simulate guard and check if there is a cycle
-func checkCycle(mapData [][]string, initGuard GuardState) bool {
+func checkCycle(mapData [][]string, initGuard guardState) bool {
 	guardStates := make([]int, len(mapData)*len(mapData[0]))
 	width, height := len(mapData[0]), len(mapData)
-	guard := GuardState{initGuard.x, initGuard.y, initGuard.dir}
+	guard := guardState{initGuard.x, initGuard.y, initGuard.dir}
 
 	for {
 		nextX, nextY := guard.nextStep()
@@ -53,7 +53,7 @@ func checkCycle(mapData [][]string, initGuard GuardState) bool {
 		}
 
 		if mapData[nextY][nextX] == "#" {
-			guard.dir = guard.turnRight()
+			guard.turnRight()
 			continue
 		}
 

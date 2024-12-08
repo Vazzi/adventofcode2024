@@ -1,14 +1,5 @@
 package day06
 
-type GuardState struct {
-	x, y int
-	dir  int
-}
-
-func (gs GuardState) turnRight() int {
-	return (gs.dir + 1) % 4
-}
-
 const (
 	Up    int = 0
 	Right     = 1
@@ -16,7 +7,16 @@ const (
 	Left      = 3
 )
 
-func (gs GuardState) nextStep() (int, int) {
+type guardState struct {
+	x, y int
+	dir  int
+}
+
+func (gs *guardState) turnRight() {
+	gs.dir = (gs.dir + 1) % 4
+}
+
+func (gs guardState) nextStep() (int, int) {
 	switch gs.dir {
 	case Up:
 		return gs.x, gs.y - 1
@@ -30,11 +30,11 @@ func (gs GuardState) nextStep() (int, int) {
 	return gs.x, gs.y
 }
 
-func findGuard(mapData [][]string) GuardState {
+func findGuard(mapData [][]string) guardState {
 	for y := range mapData {
 		for x := range mapData[y] {
 			if mapData[y][x] == "^" {
-				return GuardState{x, y, Up}
+				return guardState{x, y, Up}
 			}
 		}
 	}
