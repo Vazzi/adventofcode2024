@@ -1,11 +1,5 @@
 package day08
 
-type point struct {
-	x, y int
-}
-
-type antennasMap map[string][]point
-
 func firstSolution(input [][]string) int {
 	data := newDataMap(input)
 	antennas := findAntennas(data)
@@ -52,28 +46,4 @@ func findAntennas(data *dataMap) antennasMap {
 		}
 	}
 	return antennas
-}
-
-func (point point) makeVectorWithOrigin(origin point) vector {
-	return newVector(point.x-origin.x, point.y-origin.y)
-}
-
-type vector struct {
-	point
-}
-
-func newVector(x, y int) vector {
-	object := vector{
-		point: point{x, y},
-	}
-	return object
-}
-
-func (v *vector) mullBy(num int) {
-	v.x = v.x * num
-	v.y = v.y * num
-}
-
-func (v vector) makePointFromVectorFromOrigin(origin point) point {
-	return point{origin.x + v.x, origin.y + v.y}
 }

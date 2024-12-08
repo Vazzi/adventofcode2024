@@ -11,6 +11,7 @@ func Main() {
 	data := utils.ReadChars(utils.InputDataPath(8, false))
 	fmt.Println("Result for the first solution is: ", firstSolution(data))
 
-	// fmt.Println("Result for the second solution is: ", secondSolution(data, false))
+	secondData := utils.ReadChars(utils.InputDataPath(8, false))
+	fmt.Println("Result for the second solution is: ", secondSolution(secondData))
 
 }
