@@ -11,6 +11,7 @@ func Main() {
 	data := utils.ReadFile(utils.InputDataPath(9, false))
 	fmt.Println("Result for the first solution is: ", firstSolution(data))
 
-	//fmt.Println("Result for the second solution is: ", secondSolution(secondData))
+	// IS ok only for tests but result is too high
+	fmt.Println("Result for the second solution is: ", secondSolution(data))
 
 }

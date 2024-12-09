@@ -20,64 +20,28 @@ func firstSolution(data string) int {
 	}
 
 	fs := newFilesystem(blocks, spaces, fsSize)
-	fs.optimize()
+	optimize(fs)
 
 	return fs.computeChecksum()
 }
 
-type filesystem struct {
-	data []int
-	size int
-}
-
-func newFilesystem(blocks, spaces []int, size int) *filesystem {
-	data := make([]int, size)
-	fsIndex := 0
-
-	for fileId, block := range blocks {
-		for range block {
-			data[fsIndex] = fileId
-			fsIndex++
-		}
-		space := spaces[fileId]
-		for range space {
-			data[fsIndex] = -1
-			fsIndex++
-		}
-	}
-
-	return &filesystem{data, size}
-}
-
-func (fs *filesystem) optimize() {
+func optimize(fs *filesystem) {
 	li := 0
 	ri := fs.size - 1
 
 	for li < ri {
 
-		if fs.data[li] != -1 {
+		if fs.data[li] != freeSpace {
 			li++
 			continue
 		}
-		if fs.data[ri] == -1 {
+		if fs.data[ri] == freeSpace {
 			ri--
 			continue
 		}
 		fs.data[li] = fs.data[ri]
-		fs.data[ri] = -1
+		fs.data[ri] = freeSpace
 		li++
 		ri--
 	}
-}
-
-func (fs filesystem) computeChecksum() int {
-	checksum := 0
-	for i, id := range fs.data {
-		if id == -1 {
-			break
-		}
-		checksum += i * id
-
-	}
-	return checksum
 }

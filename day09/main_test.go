@@ -14,3 +14,13 @@ func TestFirstSolution(t *testing.T) {
 		t.Fatalf("Expected solution to be %d, got %d", expectedSolution, solution)
 	}
 }
+
+func TestSecondSolution(t *testing.T) {
+	expectedSolution := 2858
+	inputData := utils.ReadFile(utils.InputDataPath(9, true))
+
+	solution := secondSolution(inputData)
+	if solution != expectedSolution {
+		t.Fatalf("Expected solution to be %d, got %d", expectedSolution, solution)
+	}
+}
