@@ -45,6 +45,14 @@ func ReadLines(fileName string) []string {
 	return strings.Split(string(file), "\n")
 }
 
+func ReadFile(fileName string) string {
+	file, err := os.ReadFile(fileName)
+	if err != nil {
+		panic(err)
+	}
+	return string(file)
+}
+
 func ReadWords(fileName string, delimiter string) [][]string {
 	lines := ReadLines(fileName)
 	var data [][]string
