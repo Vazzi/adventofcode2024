@@ -23,13 +23,13 @@ func firstSolution(data [][]int) int {
 	result := 0
 
 	for _, sp := range startingPoints {
-		result += findAllPaths(sp, inputMap)
+		result += findAllUniquePaths(sp, inputMap)
 	}
 
 	return result
 }
 
-func findAllPaths(startingPoint point, data *mapData) int {
+func findAllEnds(startingPoint point, data *mapData) []point {
 
 	var findEnd (func(int, int, int) []point)
 	findEnd = func(x, y, val int) []point {
@@ -52,7 +52,12 @@ func findAllPaths(startingPoint point, data *mapData) int {
 		return ends
 	}
 
-	ends := findEnd(startingPoint.x, startingPoint.y, 0)
+	return findEnd(startingPoint.x, startingPoint.y, 0)
+}
+
+func findAllUniquePaths(startingPoint point, data *mapData) int {
+
+	ends := findAllEnds(startingPoint, data)
 	uniques := make(map[point]bool)
 	for _, p := range ends {
 		if !uniques[p] {
