@@ -17,12 +17,12 @@ func InputDataPath(day int, test bool) string {
 	return "./inputData/" + fileName
 }
 
-func ReadInts(fileName string) [][]int {
+func ReadInts(fileName string, sep string) [][]int {
 	lines := ReadLines(fileName)
 	data := make([][]int, 0)
 
 	for i := range lines {
-		values := strings.Split(lines[i], " ")
+		values := strings.Split(lines[i], sep)
 		lineData := make([]int, len(values))
 		for index, str := range values {
 			number, convertErr := strconv.Atoi(str)

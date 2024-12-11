@@ -9,7 +9,7 @@ import (
 func Main() {
 	fmt.Println("--- Day 2: Red-Nosed Reports ---")
 
-	data := utils.ReadInts(utils.InputDataPath(2, false))
+	data := utils.ReadInts(utils.InputDataPath(2, false), " ")
 	numberOfSafeReports := computeNumberOfSafeReports(data, false)
 
 	fmt.Println("Number of safe reports is  ", numberOfSafeReports)
