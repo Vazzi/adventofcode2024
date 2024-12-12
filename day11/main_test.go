@@ -9,7 +9,7 @@ func TestFirstSolution(t *testing.T) {
 	expectedSolution := 55312
 	inputData := utils.ReadInts(utils.InputDataPath(11, true), " ")
 
-	solution := firstSolution(inputData[0])
+	solution := solution(inputData[0], 25)
 	if solution != expectedSolution {
 		t.Fatalf("Expected solution to be %d, got %d", expectedSolution, solution)
 	}

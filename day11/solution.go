@@ -1,10 +1,12 @@
 package day11
 
-import "math"
+import (
+	"math"
+)
 
-func firstSolution(data []int) int {
+func solution(data []int, count int) int {
 
-	for c := 25; c > 0; c-- {
+	for c := count; c > 0; c-- {
 		for i := 0; i < len(data); i++ {
 			num := data[i]
 			if num == 0 {
@@ -17,20 +19,8 @@ func firstSolution(data []int) int {
 				divisor := int(math.Pow10(digitCount / 2))
 				left := int(math.Floor(float64(num / divisor)))
 				right := num % divisor
-
-				newData := make([]int, len(data)+1)
-				for index := 0; index < cap(newData); index++ {
-					if index == i {
-						newData[i] = left
-						newData[i+1] = right
-						index++ //jump to next
-					} else if index > i {
-						newData[index] = data[index-1]
-					} else {
-						newData[index] = data[index]
-					}
-				}
-				data = newData
+				data[i] = left
+				data = append(data[:i+1], append([]int{right}, data[i+1:]...)...)
 				i++ //jump to next
 			} else {
 				data[i] = data[i] * 2024
