@@ -11,8 +11,6 @@ func Main() {
 	data := utils.ReadChars(utils.InputDataPath(12, false))
 	fmt.Println("Result for the first solution is: ", firstSolution(data))
 
-	// Tooooooooooooooo slow need optimisation
-	//secondData := utils.ReadInts(utils.InputDataPath(11, false), " ")
-	//fmt.Println("Result for the second solution is: ", solution(secondData[0], 75))
+	fmt.Println("Result for the second solution is: ", secondSolution(data))
 
 }
