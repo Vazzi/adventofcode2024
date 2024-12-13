@@ -5,28 +5,38 @@ import (
 )
 
 func solution(data []int, count int) int {
+	state := map[int]int{}
+	for i := range data {
+		state[data[i]] += 1
+	}
 
 	for c := count; c > 0; c-- {
-		for i := 0; i < len(data); i++ {
-			num := data[i]
+		nextState := map[int]int{}
+		for num := range state {
 			if num == 0 {
-				data[i] = 1
+				nextState[1] += state[num]
 				continue
 			}
+
 			digitCount := int(math.Floor(math.Log10(float64(num)))) + 1
 
 			if digitCount%2 == 0 {
 				divisor := int(math.Pow10(digitCount / 2))
 				left := int(math.Floor(float64(num / divisor)))
 				right := num % divisor
-				data[i] = left
-				data = append(data[:i+1], append([]int{right}, data[i+1:]...)...)
-				i++ //jump to next
+				nextState[left] += state[num]
+				nextState[right] += state[num]
 			} else {
-				data[i] = data[i] * 2024
+				nextState[num*2024] += state[num]
 			}
 		}
+		state = nextState
 	}
 
-	return len(data)
+	result := 0
+	for _, count := range state {
+		result += count
+	}
+
+	return result
 }
