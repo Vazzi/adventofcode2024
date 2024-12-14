@@ -12,10 +12,9 @@ func secondSolution(fileName string) int {
 		tasks[i].price.y += 10000000000000
 	}
 
-	var result int = 0
-
+	var result int
 	for t := range tasks {
-		result += int(solveTaskMathematically(tasks[t]))
+		result += solveTaskMathematically(tasks[t])
 	}
 	return result
 }
@@ -29,16 +28,29 @@ func solveTaskMathematically(t task) int {
 	bx := float64(t.b.x)
 	by := float64(t.b.y)
 
-	cb := (y - (ay * x / ax)) / (by - (ay * bx / ax))
-	ca := (1.0 / ax) * (x - bx*(y-((ay/ax)*x))/(by-(ay/ax*bx)))
+	// Substitution does work on solution 1 but not on solution 2 (10000000000000 +)
+	//cb := (y - (ay * x / ax)) / (by - (ay * bx / ax))
+	//ca := (1 / ax) * (x - bx*(y-((ay/ax)*x))/(by-(ay/ax*bx)))
 
-	if isWholeNumber(ca) && isWholeNumber(cb) {
-		return int(ca)*aCost + int(cb)*bCost
+	// Cramer's rule does work on both
+	// God bless the internet :)
+	ca := (x*by - y*bx) / (ax*by - ay*bx)
+	cb := (ax*y - ay*x) / (ax*by - ay*bx)
+
+	countA, aok := getWholeNumber(ca)
+	countB, bok := getWholeNumber(cb)
+
+	if aok && ca >= 0 && bok && cb >= 0 {
+		return countA*aCost + countB*bCost
 	}
+
 	return 0
 }
 
-func isWholeNumber(num float64) bool {
+func getWholeNumber(num float64) (int, bool) {
 	tolerance := 1e-9 // tolerance for floating point error
-	return math.Abs(num-math.Floor(num)) < tolerance
+	if math.Abs(num-math.Floor(num)) < tolerance {
+		return int(math.Floor(num)), true
+	}
+	return 0, false
 }
