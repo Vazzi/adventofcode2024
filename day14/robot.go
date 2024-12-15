@@ -5,14 +5,22 @@ import (
 	"strconv"
 )
 
+type position struct {
+	x, y int
+}
+
+type velocity struct {
+	x, y int
+}
+
 type robot struct {
-	px, py int
-	vx, vy int
+	p position
+	v velocity
 }
 
 func (r *robot) move(spaceWidth, spaceHeight int) {
-	r.px = teleportIfNeeded(r.px+r.vx, spaceWidth)
-	r.py = teleportIfNeeded(r.py+r.vy, spaceHeight)
+	r.p.x = teleportIfNeeded(r.p.x+r.v.x, spaceWidth)
+	r.p.y = teleportIfNeeded(r.p.y+r.v.y, spaceHeight)
 }
 
 func teleportIfNeeded(pos, size int) int {
@@ -29,23 +37,23 @@ func newRobot(input string) *robot {
 	pY, _ := strconv.Atoi(matches[2])
 	vX, _ := strconv.Atoi(matches[3])
 	vY, _ := strconv.Atoi(matches[4])
-	return &robot{pX, pY, vX, vY}
+	return &robot{position{pX, pY}, velocity{vX, vY}}
 }
 
 func (r *robot) inQuadrant(spaceWidth, spaceHeight int) (int, bool) {
 	quadrantId := -1
 
-	if r.px == spaceWidth/2 || r.py == spaceHeight/2 {
+	if r.p.x == spaceWidth/2 || r.p.y == spaceHeight/2 {
 		return quadrantId, false
 	}
 
-	if r.px < spaceWidth/2 {
+	if r.p.x < spaceWidth/2 {
 		quadrantId = 0
-	} else if r.px > spaceWidth/2 {
+	} else if r.p.x > spaceWidth/2 {
 		quadrantId = 1
 	}
 
-	if r.py > spaceHeight/2 {
+	if r.p.y > spaceHeight/2 {
 		quadrantId += 2
 	}
 
