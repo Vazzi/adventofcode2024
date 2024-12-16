@@ -2,7 +2,6 @@ package day15
 
 import (
 	"adventofcode2024/utils"
-	"fmt"
 )
 
 const (
@@ -43,15 +42,6 @@ func firstSolution(mapPath, movesPath string) int {
 	}
 
 	return playground.countBoxesCoordinates()
-}
-
-func printMap(data [][]string) {
-	for y := range data {
-		for x := range data[y] {
-			fmt.Print(data[y][x])
-		}
-		fmt.Println()
-	}
 }
 
 func (p *position) move(dir string) position {

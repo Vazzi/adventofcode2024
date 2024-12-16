@@ -11,4 +11,6 @@ func Main() {
 	mapPath := "./inputData/day15-map.txt"
 	movesPath := "./inputData/day15-moves.txt"
 	fmt.Println("Result for the first solution is: ", firstSolution(mapPath, movesPath))
+
+	fmt.Println("Result for the second solution is: ", secondSolution(mapPath, movesPath))
 }

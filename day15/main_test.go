@@ -21,3 +21,12 @@ func TestFirstSolution02(t *testing.T) {
 		t.Fatalf("Expected solution to be %d, got %d", expectedSolution, solution)
 	}
 }
+
+func TestSecondSolution02(t *testing.T) {
+	expectedSolution := 9021
+
+	solution := secondSolution("../inputData/test/day15-map-02.txt", "../inputData/test/day15-moves-02.txt")
+	if solution != expectedSolution {
+		t.Fatalf("Expected solution to be %d, got %d", expectedSolution, solution)
+	}
+}
