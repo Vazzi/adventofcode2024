@@ -68,4 +68,5 @@ type node struct {
 	totalScore     int
 	parent         *node
 	index          int
+	dir            direction
 }
