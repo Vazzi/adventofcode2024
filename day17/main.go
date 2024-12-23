@@ -11,4 +11,5 @@ func Main() {
 
 	fmt.Println("Result for the first solution is: ", firstSolution(utils.InputDataPath(17, false)))
 
+	fmt.Println("Result for the second solution is: ", secondSolution(utils.InputDataPath(17, false)))
 }
