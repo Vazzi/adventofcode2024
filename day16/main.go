@@ -10,6 +10,7 @@ func Main() {
 
 	// Using A* algorithm to find the shortest path - works on test data but not on the real one
 	// 88472 too high
+
 	fmt.Println("Result for the first solution is: ", firstSolution(utils.ReadChars(utils.InputDataPath(16, false))))
 
 }

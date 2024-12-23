@@ -17,11 +17,12 @@ import (
 	"adventofcode2024/day14"
 	"adventofcode2024/day15"
 	"adventofcode2024/day16"
+	"adventofcode2024/day17"
 	"fmt"
 )
 
 func main() {
-	var currentDay = 16
+	var currentDay = 17
 
 	printHeader(currentDay)
 
@@ -58,6 +59,8 @@ func main() {
 		day15.Main()
 	case 16:
 		day16.Main()
+	case 17:
+		day17.Main()
 	}
 }
 
