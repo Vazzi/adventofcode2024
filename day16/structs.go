@@ -2,6 +2,7 @@ package day16
 
 type point struct {
 	x, y int
+	dir  direction
 }
 
 const (
@@ -32,7 +33,7 @@ func (pq priorityQueue) Len() int {
 }
 
 func (pq priorityQueue) Less(a, b int) bool {
-	return pq[a].totalScore < pq[b].totalScore
+	return pq[a].score < pq[b].score
 }
 
 func (pq priorityQueue) Swap(a, b int) {
@@ -63,10 +64,7 @@ func (pq *priorityQueue) Pop() interface{} {
 
 type node struct {
 	point
-	score          int
-	heuristicScore int
-	totalScore     int
-	parent         *node
-	index          int
-	dir            direction
+	score  int
+	parent *node
+	index  int
 }

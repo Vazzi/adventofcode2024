@@ -12,64 +12,85 @@ func firstSolution(grid [][]string) int {
 }
 
 func findPath(grid *[][]string, start, end point) int {
-	// up, right, down, left
-	directions := []point{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}
-
 	nodes := &priorityQueue{}
 	heap.Init(nodes)
 
-	visited := make(map[point]bool)
+	visited := make(map[point]int)
 
-	startNode := &node{point: start, score: 0, heuristicScore: manhattanDistance(start, end), dir: right}
-	startNode.totalScore = startNode.score + startNode.heuristicScore
+	startNode := &node{point: start, score: 0}
 
 	heap.Push(nodes, startNode)
 
 	for nodes.Len() > 0 {
 		currentNode := heap.Pop(nodes).(*node)
-
 		if currentNode.point == end {
 			return currentNode.score
-		}
+		} else if visitedScore(&visited, currentNode.point) > currentNode.score {
+			visited[currentNode.point] = currentNode.score
 
-		visited[currentNode.point] = true
-
-		for i, dir := range directions {
-			neighbour := point{currentNode.x + dir.x, currentNode.y + dir.y}
-
-			if (*grid)[neighbour.y][neighbour.x] == tileWall || visited[neighbour] {
-				continue
+			nextStep := step(currentNode)
+			if (*grid)[nextStep.y][nextStep.x] != tileWall { // Step ahead
+				neighbourNode := &node{point: nextStep, score: currentNode.score + costStep, parent: currentNode}
+				heap.Push(nodes, neighbourNode)
 			}
 
-			score := currentNode.score + costStep
-			if currentNode.dir != direction(i) {
-				score += costTurn
-			}
-
-			heuristicScore := currentNode.heuristicScore + 1
-			totalScore := score + heuristicScore
-
-			neighbourNode := &node{point: neighbour, score: score, heuristicScore: heuristicScore, totalScore: totalScore, parent: currentNode, dir: direction(i)}
-
-			heap.Push(nodes, neighbourNode)
+			leftPoint := point{currentNode.x, currentNode.y, turnLeft(currentNode.dir)}
+			turnScore := currentNode.score + costTurn
+			// Turn left
+			heap.Push(nodes, &node{point: leftPoint, score: turnScore})
+			rightPoint := point{currentNode.x, currentNode.y, turnRight(currentNode.dir)}
+			// Turn right
+			heap.Push(nodes, &node{point: rightPoint, score: turnScore})
 		}
 	}
 
 	return 0
 }
 
-func manhattanDistance(a, b point) int {
-	return int(math.Abs(float64(a.x-b.x)) + math.Abs(float64(a.y-b.y)))
+func visitedScore(data *map[point]int, key point) int {
+	score, ok := (*data)[key]
+	if ok {
+		return score
+	}
+	return math.MaxInt
+}
+
+func turnLeft(dir direction) direction {
+	if dir == up {
+		return left
+	}
+	return direction(int(dir) - 1)
+}
+
+func turnRight(dir direction) direction {
+	if dir == left {
+		return up
+	}
+	return direction(int(dir) + 1)
+}
+
+func step(curr *node) point {
+	switch curr.dir {
+	case up:
+		return point{curr.x, curr.y - 1, curr.dir}
+	case down:
+		return point{curr.x, curr.y + 1, curr.dir}
+	case left:
+		return point{curr.x - 1, curr.y, curr.dir}
+	case right:
+		return point{curr.x + 1, curr.y, curr.dir}
+	}
+	return curr.point
 }
 
 func findStartEnd(mapData *[][]string) (start, end point) {
 	for y := range *mapData {
 		for x := range (*mapData)[y] {
 			if (*mapData)[y][x] == tileStart {
-				start = point{x, y}
+				start = point{x, y, right}
 			}
 			if (*mapData)[y][x] == tileEnd {
-				end = point{x, y}
+				end = point{x, y, right}
 			}
 		}
 	}
